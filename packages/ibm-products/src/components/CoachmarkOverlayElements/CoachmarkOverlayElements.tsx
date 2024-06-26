@@ -72,6 +72,14 @@ interface CoachmarkOverlayElementsProps {
    * The label for the Close button.
    */
   closeButtonLabel?: string;
+  /**
+   * Callback called after clicking on the next button
+   */
+  onClickNext?: () => void;
+   /**
+   * Callback called after clicking on the back button
+   */
+  onClickBack?: () => void;
 }
 
 // NOTE: the component SCSS is not imported here: it is rolled up separately.
