@@ -80,6 +80,10 @@ interface CoachmarkOverlayElementsProps {
    * Callback called after clicking on the back button
    */
   onClickBack?: (targetStep: number) => void;
+  /**
+   * The current progress
+   */
+  currentProgress?: number;
 }
 
 // NOTE: the component SCSS is not imported here: it is rolled up separately.
@@ -119,6 +123,7 @@ export let CoachmarkOverlayElements = React.forwardRef<
       closeButtonLabel = defaults.closeButtonLabel,
       onClickBack,
       onClickNext,
+      currentProgress,
       // Collect any other property values passed in.
       ...rest
     },
@@ -127,8 +132,12 @@ export let CoachmarkOverlayElements = React.forwardRef<
     const buttonFocusRef = useRef<ButtonProps>();
     const scrollRef = useRef<CarouselProps>();
     const [scrollPosition, setScrollPosition] = useState(0);
-    const [currentProgStep, _setCurrentProgStep] = useState(0);
+    const [currentProgStep, _setCurrentProgStep] = useState(currentProgress);
     const coachmark = useCoachmark();
+
+    useEffect(() => {
+      _setCurrentProgStep(currentProgress)
+    }, [currentProgress])
 
     const setCurrentProgStep = (value) => {
       if (currentProgStep > 0 && value === 0 && buttonFocusRef.current) {
@@ -353,4 +362,8 @@ CoachmarkOverlayElements.propTypes = {
    * Callback called after clicking on the back button
    */
   onClickBack?: PropTypes.func,
+  /**
+   * The current progress
+   */
+  currentProgress?: PropTypes.number,
 };
