@@ -75,11 +75,11 @@ interface CoachmarkOverlayElementsProps {
   /**
    * Callback called after clicking on the next button
    */
-  onClickNext?: () => void;
+  onClickNext?: (targetStep: number) => void;
    /**
    * Callback called after clicking on the back button
    */
-  onClickBack?: () => void;
+  onClickBack?: (targetStep: number) => void;
 }
 
 // NOTE: the component SCSS is not imported here: it is rolled up separately.
@@ -117,6 +117,8 @@ export let CoachmarkOverlayElements = React.forwardRef<
       nextButtonText = defaults.nextButtonText,
       previousButtonLabel = defaults.previousButtonLabel,
       closeButtonLabel = defaults.closeButtonLabel,
+      onClickBack,
+      onClickNext,
       // Collect any other property values passed in.
       ...rest
     },
@@ -242,6 +244,7 @@ export let CoachmarkOverlayElements = React.forwardRef<
                     );
                     scrollRef?.current?.scrollToView?.(targetStep);
                     setCurrentProgStep(targetStep);
+                    onClickBack?.(targetStep);
                   }}
                 >
                   {previousButtonLabel}
@@ -262,6 +265,7 @@ export let CoachmarkOverlayElements = React.forwardRef<
                     );
                     scrollRef?.current?.scrollToView?.(targetStep);
                     setCurrentProgStep(targetStep);
+                    onClickNext?.(targetStep);
                   }}
                 >
                   {nextButtonText}
@@ -341,4 +345,12 @@ CoachmarkOverlayElements.propTypes = {
    * The label for the Previous button.
    */
   previousButtonLabel: PropTypes.string,
+  /**
+   * Callback called after clicking on the next button
+   */
+  onClickNext?: PropTypes.func,
+   /**
+   * Callback called after clicking on the back button
+   */
+  onClickBack?: PropTypes.func,
 };
