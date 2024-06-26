@@ -84,6 +84,17 @@ describe(componentName, () => {
     screen.getByTestId(dataTestId);
   });
 
+  it('accepts current progress', async () => {
+    const user = userEvent.setup();
+    renderCoachmarkWithOverlayElements({ 'data-testid': dataTestId, 'currentProgress': 1});
+    const beaconOrButton = screen.getByRole('button', {
+      name: 'Show information',
+    });
+    await act(() => user.click(beaconOrButton));
+    // TODO
+    expect(screen.getByTestId(dataTestId)).toHaveClass(blockClass);
+  });
+
   it('applies className to the containing node', async () => {
     const user = userEvent.setup();
     renderCoachmarkWithOverlayElements({
